@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:18.7-alpine3.24
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+    ports:
+      - "127.0.0.1:5433:5432"
+
+    healthcheck:
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      test: ["CMD-SHELL", "pg_isready -U shelfflow -d shelfflow "]
+
+
+    environment:
+      POSTGRES_DB: shelfflow
+      POSTGRES_USER: shelfflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?No password supplied}
+
+volumes:
+  postgres_data: {}
+
+
+
+
+
+
